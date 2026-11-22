@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f7f3" />
+    <meta name="description" content="Fit enzyme inhibition models in your browser with base R and webR." />
+    <title>Enzyme Inhibitor Lab</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Enzyme Inhibitor Lab home">
+          <span class="brand-mark" aria-hidden="true">E</span>
+          <span>Enzyme <b>Inhibitor Lab</b></span>
+        </a>
+        <span class="runtime"><span class="runtime-dot"></span><span id="runtime-status">Starting browser R…</span></span>
+      </header>
+
+      <main>
+        <section class="intro">
+          <div class="eyebrow"><span class="eyebrow-line"></span> KINETICS WORKBENCH</div>
+          <h1>Understand your<br /><em>inhibition pattern.</em></h1>
+          <p>Fit Michaelis–Menten curves independently for each condition, right here in your browser.</p>
+        </section>
+
+        <section class="workspace" aria-label="Analysis workspace">
+          <aside class="input-panel panel">
+            <div class="section-heading"><span class="step">01</span><div><h2>Your dataset</h2><p>CSV · one row per measurement</p></div></div>
+            <div class="drop-zone" id="drop-zone">
+              <div class="upload-icon" aria-hidden="true">↑</div>
+              <strong>Drop a CSV file here</strong>
+              <span>or <label class="browse-link" for="csv-file">browse files</label></span>
+              <input id="csv-file" type="file" accept=".csv,text/csv" />
+            </div>
+            <div class="file-info" id="file-info"><span class="file-icon">CSV</span><span><b id="file-name">enzyme_kinetics.csv</b><small id="file-size">Example dataset</small></span><button id="reset-file" class="text-button" type="button" title="Reload example dataset">Reset</button></div>
+            <div class="expected-fields"><span class="micro-label">REQUIRED COLUMNS</span><div class="chips"><code>condition</code><code>substrate_mM</code><code>velocity</code></div></div>
+            <div class="method-note"><span class="info-icon">i</span><span><b>Separate fits, no pooling.</b><br />Nonlinear least squares · base R <code>nls()</code></span></div>
+            <button id="run-button" class="run-button" type="button" disabled><span>Run analysis</span><span aria-hidden="true">↗</span></button>
+          </aside>
+
+          <section class="results-panel panel" aria-live="polite">
+            <div class="section-heading results-heading"><span class="step">02</span><div><h2>Analysis results</h2><p id="results-subtitle">Waiting for browser R to be ready</p></div></div>
+            <div id="empty-state" class="empty-state"><div class="empty-graphic" aria-hidden="true"><span></span><span></span><span></span><i></i></div><b>Your results will appear here</b><p>Each condition gets its own Michaelis–Menten fit and curve.</p></div>
+            <div id="error-box" class="alert error-alert" role="alert" hidden></div>
+            <div id="warning-box" class="alert warning-alert" role="status" hidden></div>
+            <div id="results-content" hidden>
+              <div class="metric-strip" id="row-counts"></div>
+              <div class="table-wrap"><table><thead><tr><th>CONDITION</th><th>ROWS</th><th>V<sub>max</sub> <small>µmol/min</small></th><th>K<sub>m</sub> <small>mM</small></th></tr></thead><tbody id="fit-table"></tbody></table></div>
+              <div id="interpretation" class="interpretation" hidden><span class="interpretation-icon">↗</span><div><span class="micro-label">INTERPRETATION</span><p></p></div></div>
+              <div class="chart-card"><div class="chart-heading"><div><span class="micro-label">MICHAELIS–MENTEN FIT</span><p>Observed measurements and fitted curves</p></div><span class="chart-tag">BASE R</span></div><div id="plot-container" class="plot-container"></div></div>
+              <details class="code-details"><summary><span>R code run</span><span class="code-chevron">⌄</span></summary><pre><code id="r-code"></code></pre></details>
+            </div>
+          </section>
+        </section>
+        <footer><span>Analysis runs locally in your browser with <b>webR</b> · No data is uploaded</span><span>Michaelis–Menten model <i>v = V<sub>max</sub>S / (K<sub>m</sub> + S)</i></span></footer>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
